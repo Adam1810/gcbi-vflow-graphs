@@ -1,0 +1,377 @@
+{
+    "properties": {},
+    "iconsrc": "sac-producer.svg",
+    "description": " Data Push CoffeeFlow to SAP Analytics Cloud",
+    "processes": {
+        "sapanalyticscloudproducer1": {
+            "component": "com.sap.sac.producer",
+            "metadata": {
+                "label": "SAP Analytics Cloud Producer",
+                "x": 654.9999980926514,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {
+                    "host": "atos-information.eu10.hanacloudservices.cloud.sap",
+                    "oauth2TokenUrl": "https://atos-information.authentication.eu10.hana.ondemand.com/oauth/token",
+                    "oauth2AuthUrl": "https://atos-information.authentication.eu10.hana.ondemand.com/oauth/authorize",
+                    "oauth2ClientId": "sb-94dde00b-a9fc-489f-b761-dc4f115acc6c!b38819|client!b3650",
+                    "oauth2ClientSecret": "XRAApjE7Pxzc9/5bY3AqbjerX2g="
+                }
+            }
+        },
+        "decodetable1": {
+            "component": "com.sap.table.decode",
+            "metadata": {
+                "label": "Decode Table",
+                "x": 316.99999809265137,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "config": {
+                    "format": "CSV",
+                    "csvHeader": "Column names",
+                    "csvFieldDelimiter": ";"
+                }
+            }
+        },
+        "wiretap2": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 823.9999980926514,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            }
+        },
+        "sapanalyticscloudformatter1": {
+            "component": "com.sap.sac.formatter",
+            "metadata": {
+                "label": "SAP Analytics Cloud Formatter",
+                "x": 485.99999809265137,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "tenant": "https://atos-information.eu10.hanacloudservices.cloud.sap",
+                    "inferColumnInfo": true,
+                    "appendMode": "Replace"
+                }
+            }
+        },
+        "readfile2": {
+            "component": "com.sap.file.read",
+            "metadata": {
+                "label": "Read File",
+                "x": 17,
+                "y": 12,
+                "height": 80,
+                "width": 120,
+                "config": {
+                    "mode": "Once",
+                    "connection": {
+                        "configurationType": "Connection Management",
+                        "connectionID": "DI_DATA_LAKE"
+                    },
+                    "path": "/external/AtosGCP/shared/ml/data/coffeeflow/machine_data/Machines_v1.csv"
+                }
+            }
+        },
+        "fromfile1": {
+            "component": "com.sap.file.fromFile",
+            "metadata": {
+                "label": "From File",
+                "x": 201.99999904632568,
+                "y": 27,
+                "height": 50,
+                "width": 50,
+                "config": {}
+            }
+        },
+        "workflowterminator1": {
+            "component": "com.sap.dh.terminator",
+            "metadata": {
+                "label": "Workflow Terminator",
+                "x": 1157,
+                "y": 128,
+                "height": 80,
+                "width": 120,
+                "config": {}
+            }
+        },
+        "readfile21": {
+            "component": "com.sap.file.read",
+            "metadata": {
+                "label": "Read File",
+                "x": 17,
+                "y": 142,
+                "height": 80,
+                "width": 120,
+                "config": {
+                    "mode": "Once",
+                    "connection": {
+                        "configurationType": "Connection Management",
+                        "connectionID": "DI_DATA_LAKE"
+                    },
+                    "path": "/shared/ml/data/coffeeflow/machine_data/Beverages_v1.csv"
+                }
+            },
+            "name": "readfile2"
+        },
+        "fromfile11": {
+            "component": "com.sap.file.fromFile",
+            "metadata": {
+                "label": "From File",
+                "x": 174.99999904632568,
+                "y": 148,
+                "height": 50,
+                "width": 50,
+                "config": {}
+            },
+            "name": "fromfile1"
+        },
+        "decodetable11": {
+            "component": "com.sap.table.decode",
+            "metadata": {
+                "label": "Decode Table",
+                "x": 289.99999809265137,
+                "y": 133,
+                "height": 80,
+                "width": 120,
+                "config": {
+                    "format": "CSV",
+                    "csvHeader": "Column names",
+                    "csvFieldDelimiter": ","
+                }
+            },
+            "name": "decodetable1"
+        },
+        "sapanalyticscloudformatter11": {
+            "component": "com.sap.sac.formatter",
+            "metadata": {
+                "label": "SAP Analytics Cloud Formatter",
+                "x": 458.99999809265137,
+                "y": 133,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {
+                    "tenant": "https://atos-information.eu10.hanacloudservices.cloud.sap",
+                    "inferColumnInfo": true,
+                    "appendMode": "Replace"
+                }
+            },
+            "name": "sapanalyticscloudformatter1"
+        },
+        "sapanalyticscloudproducer11": {
+            "component": "com.sap.sac.producer",
+            "metadata": {
+                "label": "SAP Analytics Cloud Producer",
+                "x": 627.9999980926514,
+                "y": 133,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {
+                    "host": "atos-information.eu10.hanacloudservices.cloud.sap",
+                    "oauth2TokenUrl": "https://atos-information.authentication.eu10.hana.ondemand.com/oauth/token",
+                    "oauth2AuthUrl": "https://atos-information.authentication.eu10.hana.ondemand.com/oauth/authorize",
+                    "oauth2ClientId": "sb-94dde00b-a9fc-489f-b761-dc4f115acc6c!b38819|client!b3650",
+                    "oauth2ClientSecret": "XRAApjE7Pxzc9/5bY3AqbjerX2g="
+                }
+            },
+            "name": "sapanalyticscloudproducer1"
+        },
+        "wiretap21": {
+            "component": "com.sap.util.wiretap",
+            "metadata": {
+                "label": "Wiretap",
+                "x": 808.9999980926514,
+                "y": 133,
+                "height": 80,
+                "width": 120,
+                "ui": "dynpath",
+                "config": {}
+            },
+            "name": "wiretap2"
+        },
+        "21multiplexer1": {
+            "component": "com.sap.system.multiplexer.2-1",
+            "metadata": {
+                "label": "2:1 Multiplexer",
+                "x": 990,
+                "y": 66,
+                "height": 80,
+                "width": 120,
+                "extensible": true,
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {
+                "points": "778.9999980926514,52 818.9999980926514,52"
+            },
+            "src": {
+                "port": "out",
+                "process": "sapanalyticscloudproducer1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap2"
+            }
+        },
+        {
+            "metadata": {
+                "points": "440.99999809265137,52 480.99999809265137,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "decodetable1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "sapanalyticscloudformatter1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "609.9999980926514,52 649.9999980926514,52"
+            },
+            "src": {
+                "port": "output",
+                "process": "sapanalyticscloudformatter1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "sapanalyticscloudproducer1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "141,43 168.99999952316284,43 168.99999952316284,52 196.99999904632568,52"
+            },
+            "src": {
+                "port": "file",
+                "process": "readfile2"
+            },
+            "tgt": {
+                "port": "file",
+                "process": "fromfile1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "255.99999904632568,61 283.9999985694885,61 283.9999985694885,52 311.99999809265137,52"
+            },
+            "src": {
+                "port": "message",
+                "process": "fromfile1"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "decodetable1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "228.99999904632568,182 257,182 257,173 284.99999809265137,173"
+            },
+            "src": {
+                "port": "message",
+                "process": "fromfile11"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "decodetable11"
+            }
+        },
+        {
+            "metadata": {
+                "points": "413.99999809265137,173 453.99999809265137,173"
+            },
+            "src": {
+                "port": "output",
+                "process": "decodetable11"
+            },
+            "tgt": {
+                "port": "input",
+                "process": "sapanalyticscloudformatter11"
+            }
+        },
+        {
+            "metadata": {
+                "points": "582.9999980926514,173 622.9999980926514,173"
+            },
+            "src": {
+                "port": "output",
+                "process": "sapanalyticscloudformatter11"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "sapanalyticscloudproducer11"
+            }
+        },
+        {
+            "metadata": {
+                "points": "751.9999980926514,173 803.9999980926514,173"
+            },
+            "src": {
+                "port": "out",
+                "process": "sapanalyticscloudproducer11"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "wiretap21"
+            }
+        },
+        {
+            "metadata": {
+                "points": "947.9999980926514,52 966.5,52 966.5,97 985,97"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap2"
+            },
+            "tgt": {
+                "port": "in1",
+                "process": "21multiplexer1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "932.9999980926514,173 959,173 959,115 985,115"
+            },
+            "src": {
+                "port": "out",
+                "process": "wiretap21"
+            },
+            "tgt": {
+                "port": "in2",
+                "process": "21multiplexer1"
+            }
+        },
+        {
+            "metadata": {
+                "points": "1114,106 1133,106 1133,168 1152,168"
+            },
+            "src": {
+                "port": "out1",
+                "process": "21multiplexer1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "workflowterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {}
+}

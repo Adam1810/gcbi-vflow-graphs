@@ -1,0 +1,120 @@
+{
+    "description": "Big Query Integration",
+    "processes": {
+        "googlebigquerysqlconsumer1": {
+            "component": "com.sap.dh.ds.gbq.sql.consumer",
+            "metadata": {
+                "label": "Google BigQuery SQL Consumer",
+                "extensible": false,
+                "config": {
+                    "gbqConnection": {
+                        "configurationType": "Configuration Manager",
+                        "connectionID": "atosbigquery"
+                    },
+                    "adapted_dataset": {
+                        "remoteObjectReference": {
+                            "connection": {
+                                "id": "atosbigquery",
+                                "type": "GCP_BIGQUERY"
+                            },
+                            "name": "SQL_Table",
+                            "remoteObjectType": "TABLE",
+                            "qualifiedName": "/SQL_Owner/SQL_Table",
+                            "nativeQualifiedName": "SQL_Owner.SQL_Table",
+                            "owner": "SQL_Owner"
+                        },
+                        "dataAccessConfiguration": {
+                            "MetadataResponseXML": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<MetadataReply xmlns=\"http://www.sap.com/DataServices/DataServicesXSD\">\n<MetadataObjects><Document DocumentName=\"SQL_Table\"  OwnerName=\"SQL_Owner\" ><Attributes><Attribute Name=\"Table_Subtype\"  Value=\"TABLE\" /></Attributes><Element Name=\"timestamp\"  DataType=\"timestamp\" NativeType=\"TIMESTAMP\"></Element><Element Name=\"deviceid\"  DataType=\"varchar\" Size=\"65536\"  NativeType=\"STRING\"></Element><Element Name=\"speed\"  DataType=\"double\" NativeType=\"FLOAT\"></Element><Element Name=\"position\"  DataType=\"double\" NativeType=\"FLOAT\"></Element></Document></MetadataObjects><Status><StatusCode>SUCCESS</StatusCode></Status></MetadataReply>",
+                            "TableType": "TABLE"
+                        },
+                        "schema": {
+                            "genericType": "TABLE",
+                            "tableBasedRepresentation": {
+                                "attributes": [
+                                    {
+                                        "name": "timestamp",
+                                        "templateType": "timestamp",
+                                        "datatype": "DATETIME",
+                                        "nativeDatatype": "TIMESTAMP"
+                                    },
+                                    {
+                                        "name": "deviceid",
+                                        "templateType": "string",
+                                        "datatype": "STRING",
+                                        "length": 65536,
+                                        "nativeDatatype": "STRING"
+                                    },
+                                    {
+                                        "name": "speed",
+                                        "templateType": "float64",
+                                        "datatype": "FLOATING",
+                                        "length": 8,
+                                        "nativeDatatype": "FLOAT"
+                                    },
+                                    {
+                                        "name": "position",
+                                        "templateType": "float64",
+                                        "datatype": "FLOATING",
+                                        "length": 8,
+                                        "nativeDatatype": "FLOAT"
+                                    }
+                                ]
+                            }
+                        },
+                        "capabilities": {
+                            "isProfileable": false
+                        }
+                    },
+                    "native_sql_statement": "select * from ger_cbs_iot_daTA.measures"
+                }
+            }
+        },
+        "writefile1": {
+            "component": "com.sap.file.write",
+            "metadata": {
+                "label": "Write File",
+                "config": {
+                    "connection": {
+                        "configurationType": "Connection Management",
+                        "connectionID": "AtosGCP"
+                    }
+                }
+            }
+        },
+        "tofile1": {
+            "component": "com.sap.file.toFile",
+            "metadata": {
+                "label": "To File",
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {},
+            "src": {
+                "port": "outConfig",
+                "process": "googlebigquerysqlconsumer1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "tofile1"
+            }
+        },
+        {
+            "metadata": {},
+            "src": {
+                "port": "file",
+                "process": "tofile1"
+            },
+            "tgt": {
+                "port": "file",
+                "process": "writefile1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "properties": {}
+}

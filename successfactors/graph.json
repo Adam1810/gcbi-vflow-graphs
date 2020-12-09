@@ -1,0 +1,121 @@
+{
+    "description": "",
+    "processes": {
+        "odataqueryconsumer1": {
+            "component": "com.sap.dh.sdi.odata.query.consumer",
+            "metadata": {
+                "label": "OData Query Consumer",
+                "extensible": false,
+                "config": {
+                    "odataConnection": {
+                        "configurationType": "Manual",
+                        "connectionProperties": {
+                            "url": "https://apisalesdemo4.successfactors.com/odata/v2/PerPerson('103049')",
+                            "version": "V2",
+                            "authenticationType": "Basic",
+                            "requireCsrfHeader": "false",
+                            "httpHeaders": [],
+                            "user": "akosak@SFPART041787",
+                            "password": "7ujm\"WSX"
+                        }
+                    },
+                    "defaultColumnSize": "1024"
+                }
+            }
+        },
+        "graphterminator1": {
+            "component": "com.sap.util.graphTerminator",
+            "metadata": {
+                "label": "Graph Terminator",
+                "config": {}
+            }
+        },
+        "flowagentcsvproducer1": {
+            "component": "com.sap.dh.ds.csv.producer",
+            "metadata": {
+                "label": "Flowagent CSV Producer",
+                "extensible": false,
+                "config": {
+                    "additionalProperties_csv": {
+                        "columnDelimiter": ";",
+                        "csvHeaderIncluded": true,
+                        "textDelimiterStyle": "Always",
+                        "csvHeaderIncludedBehavior": "First batch"
+                    }
+                }
+            }
+        },
+        "writefile1": {
+            "component": "com.sap.file.write",
+            "metadata": {
+                "label": "Write File",
+                "config": {
+                    "pathMode": "Static (from configuration)",
+                    "connection": {
+                        "configurationType": "Connection Management",
+                        "connectionID": "DI_DATA_LAKE"
+                    },
+                    "path": "/shared/ml/data/showcase/test.csv",
+                    "mode": "Append"
+                }
+            }
+        },
+        "tofile1": {
+            "component": "com.sap.file.toFile",
+            "metadata": {
+                "label": "To File",
+                "config": {}
+            }
+        }
+    },
+    "groups": [],
+    "connections": [
+        {
+            "metadata": {},
+            "src": {
+                "port": "outConfig",
+                "process": "odataqueryconsumer1"
+            },
+            "tgt": {
+                "port": "inConfig",
+                "process": "flowagentcsvproducer1"
+            }
+        },
+        {
+            "metadata": {},
+            "src": {
+                "port": "outMessage",
+                "process": "flowagentcsvproducer1"
+            },
+            "tgt": {
+                "port": "in",
+                "process": "tofile1"
+            }
+        },
+        {
+            "metadata": {},
+            "src": {
+                "port": "file",
+                "process": "tofile1"
+            },
+            "tgt": {
+                "port": "file",
+                "process": "writefile1"
+            }
+        },
+        {
+            "metadata": {},
+            "src": {
+                "port": "file",
+                "process": "writefile1"
+            },
+            "tgt": {
+                "port": "stop",
+                "process": "graphterminator1"
+            }
+        }
+    ],
+    "inports": {},
+    "outports": {},
+    "properties": {}
+}
